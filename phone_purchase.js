@@ -6,6 +6,8 @@ let bankBalance = 800;
 
 let phonesBought = 0;
 let accessoriesBought = 0;
+let totalSpent = 0;
+
 
 const withTax = function(itemPrice) {
     let taxAmount = itemPrice * taxRate;
@@ -18,9 +20,6 @@ const purchaseItem = function(item) {
   spendingThreshold = spendingThreshold - withTax(item);
 }
 
-//bankbalance % = how much money is left after all purchases
-//bankbalance/price to fixed 0 is how many you can buy
-
 const makePurchases = function() {
   while (spendingThreshold > withTax(phone)) {
     purchaseItem(phone);
@@ -30,10 +29,13 @@ const makePurchases = function() {
     purchaseItem(accessory);
     accessoriesBought++;
   }
+  totalSpent = (phonesBought * withTax(phone)) + (accessoriesBought * withTax(accessory));
+  totalSpent = '$' + totalSpent.toFixed(2);
+  bankBalance = '$' + bankBalance.toFixed(2);
+  spendingThreshold = '$' + spendingThreshold.toFixed(2)
 }
-
-//const totalPrice = function() {};
 
 makePurchases();
 
-console.log(bankBalance, spendingThreshold, phonesBought, accessoriesBought);
+console.log(`Spending ${totalSpent}, you bought ${phonesBought} phone(s) and ${accessoriesBought} accessory(ies).
+You are under your spending budget by ${spendingThreshold} and you have ${bankBalance} left in your bank account.`)
